@@ -5,6 +5,7 @@ from app.core.auth import verify_password, create_access_token, get_password_has
 from app.core.config import settings
 from app.db.session import get_db
 from app.models.models import User
+from app.schemas.user import UserCreate
 from datetime import timedelta
 
 router = APIRouter()
@@ -30,12 +31,11 @@ async def login(
 
 @router.post("/register")
 async def register(
-    email: str,
-    password: str,
+    user_in: UserCreate,
     db: Session = Depends(get_db)
 ):
     # Check if user already exists
-    if db.query(User).filter(User.email == email).first():
+    if db.query(User).filter(User.email == user_in.email).first():
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered"
@@ -43,12 +43,11 @@ async def register(
     
     # Create new user
     user = User(
-        email=email,
-        hashed_password=get_password_hash(password),
+        email=user_in.email,
+        hashed_password=get_password_hash(user_in.password),
         is_active=True
     )
     db.add(user)
     db.commit()
     db.refresh(user)
-    
-    return {"message": "User created successfully"} 
+    return {"message": "User created successfully"}

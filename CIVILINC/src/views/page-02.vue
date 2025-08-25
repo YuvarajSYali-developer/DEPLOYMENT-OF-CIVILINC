@@ -33,7 +33,7 @@
           
           <form @submit.prevent="handleSignIn" class="sign-in-form-main-new">
             <div class="form-group-new">
-              <label for="email-new">Email</label>
+              <label for="email-new">Email-->admin@civilinc.com</label>
               <input
                 type="email"
                 id="email-new"
@@ -48,7 +48,7 @@
             </div>
             
             <div class="form-group-new">
-              <label for="password-new">Password</label>
+              <label for="password-new">Password--> admin123</label>
               <div class="password-input-new">
                 <input
                   :type="showPassword ? 'text' : 'password'"
@@ -190,7 +190,7 @@ export default {
         const form = new URLSearchParams();
         form.append('username', this.email);
         form.append('password', this.password);
-        const response = await api.post('/api/v1/login', form, {
+        const response = await api.post('/login', form, {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         });
         if (response && response.data && response.data.access_token) {

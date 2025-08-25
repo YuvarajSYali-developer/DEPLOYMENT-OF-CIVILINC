@@ -1,18 +1,27 @@
+import axios from 'axios';
 import api from './api';
 
 export const authService = {
   async login(email, password) {
     try {
-      // Make API call to login endpoint with form data
-      const formData = new FormData();
-      formData.append('username', email);
-      formData.append('password', password);
+      // Make API call to login endpoint with URL-encoded form data
+      const params = new URLSearchParams();
+      params.append('username', email);
+      params.append('password', password);
       
-      const response = await api.post('/api/v1/login', formData, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+      // Use a separate axios instance for login to handle form data
+      const baseURL = process.env.VUE_APP_API_URL || 'http://localhost:8000';
+      const response = await axios.post(
+        `${baseURL}/api/v1/login`,
+        params.toString(),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          withCredentials: true
         }
-      });
+      );
       
       // Store token in localStorage
       if (response.data.access_token) {
@@ -27,7 +36,7 @@ export const authService = {
 
   async register(email, password) {
     try {
-      const response = await api.post('/api/v1/register', {
+      const response = await api.post('/register', {
         email: email,
         password: password
       });

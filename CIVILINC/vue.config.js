@@ -1,6 +1,7 @@
 const path = require('path')
 
 module.exports = {
+  runtimeCompiler: true, // Enable runtime compiler for template compilation
   devServer: {
     allowedHosts: "all",
     proxy: {
@@ -8,8 +9,22 @@ module.exports = {
         target: process.env.VUE_APP_API_URL || 'http://localhost:8000',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/api'
-        }
+          '^/api': '' // Remove /api from the path when forwarding to backend
+        },
+        logLevel: 'debug' // Enable proxy logging
+      }
+    },
+    client: {
+      overlay: {
+        warnings: false,
+        errors: true
+      }
+    }
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        'vue$': 'vue/dist/vue.esm.js' // Use the full build with template compiler
       }
     }
   },
