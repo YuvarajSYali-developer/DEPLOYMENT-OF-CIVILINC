@@ -1,0 +1,13 @@
+project_type,location,severity,budget
+Road Construction,Urban,High,5000000
+Bridge Repair,Rural,Medium,3000000
+Water Pipeline,Urban,Low,1500000
+Building Renovation,Urban,High,4000000
+Road Construction,Rural,Low,4500000
+Bridge Repair,Urban,Medium,2800000
+Water Pipeline,Rural,High,1200000
+Building Renovation,Urban,Low,3800000
+Road Construction,Urban,Medium,5200000
+Bridge Repair,Rural,High,3200000
+Water Pipeline,Urban,Low,1300000
+Building Renovation,Rural,Medium,3900000
